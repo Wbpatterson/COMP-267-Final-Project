@@ -1,4 +1,4 @@
-from App import App
+from src.App import App
 
 # Rich package for styling table output
 # Pyinstaller for creating app executable (maybe)
