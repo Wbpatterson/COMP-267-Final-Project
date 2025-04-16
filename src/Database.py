@@ -38,7 +38,6 @@ class DataBase:
                 print("Cannot connect to database")
         else:
             print("Connection Successful!!")
-            print()
     
     def close(self):
         if not self.connection:
