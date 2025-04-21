@@ -52,8 +52,44 @@ class App:
         self.user.load(userInfo)         
 
     def show_student_menu(self):
-        # will implement later
-        pass
+        print("\n=== Student Menu ===")
+        print("1. View My Classes")
+        print("2. Drop a Class")
+        print("3. Logout")
+
+        choice = input("Choose an option: ")
+    
+        if choice == '1':
+            self.view_classes()  # Method to view enrolled classes
+        elif choice == '2':
+            self.drop_class()  # Method to drop a class
+        elif choice == '3':
+            print("Logging out...\n")
+            break  # Exit the menu and go back to login
+        else:
+            print("Invalid option. Please try again.")
+
+    def view_classes(self):
+    # This method should fetch and display the classes the student is enrolled in.
+    # assumes `self.user.id` holds the student's ID
+    student_id = self.user.id
+    query = """
+        SELECT c.class_id, c.class_name
+        FROM enrollment e
+        JOIN class c ON e.class_id = c.class_id
+        WHERE e.student_id = %s
+    """
+    
+    # Execute the query to get the classes
+    self.db.cursor.execute(query, (student_id,))
+    rows = self.db.cursor.fetchall()
+
+    print("\nYour Enrolled Classes:")
+    if rows:
+        for class_id, class_name in rows:
+            print(f"- {class_id}: {class_name}")
+    else:
+        print("You are not enrolled in any classes.")
     
     def show_manager_menu(self):
         # will implement later
