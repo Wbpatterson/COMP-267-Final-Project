@@ -177,11 +177,11 @@ class App:
             print("Student successfully removed from the class.")
 
         elif choice == '5':
-            fname = input("First Name: ").strip()
-            lname = input("Last Name: ").strip()
-            username = input("Username: ").strip()
-            password = input("Password: ").strip()
-            major_id = input("Major ID: ").strip()
+            fname = input("First Name: ")
+            lname = input("Last Name: ")
+            username = input("Username: ")
+            password = input("Password: ")
+            major_id = input("Major ID: ")
 
             insert_query = """
                 INSERT INTO users (roleID, userName, userPassword, fname, lname, majorID)
