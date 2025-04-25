@@ -47,4 +47,39 @@ CREATE TABLE rosterclass(
     FOREIGN KEY (userid) REFERENCES users (id)
 );
 
+--Below are the sample queries used for the presentation
+--If you want to go back to the previous layout, delete all the queries below this comment.
+-- Majors
+INSERT INTO major (major) VALUES
+('Computer Science'),
+('Mathematics'),
+('Physics'),
+('Biology');
+
+-- Students
+INSERT INTO users (fname, lname, userName, userPassword, roleID, majorID) VALUES
+('John', 'Doe', 'jdoe', 'password123', 'stu', 1),
+('Jane', 'Smith', 'jsmith', 'password456', 'stu', 2),
+('Alice', 'Johnson', 'ajohnson', 'password789', 'stu', 3);
+
+-- Manager
+INSERT INTO users (fname, lname, userName, userPassword, roleID, majorID) VALUES
+('Mary', 'Davis', 'mdavis', 'admin123', 'mgr', 1);
+
+-- Classes
+INSERT INTO roster (class, code) VALUES
+('Computer Science 101', 'CS101'),
+('Mathematics 201', 'MATH201'),
+('Physics 301', 'PHYS301'),
+('Chemistry 101', 'CHEM101'),
+('Biology 202', 'BIO202');
+
+-- Enrollments
+INSERT INTO rosterclass (rosterid, userid) VALUES
+(1, 2), -- John (id=2) in CS101
+(2, 2), -- John in MATH201
+(3, 3), -- Jane (id=3) in PHYS301
+(4, 3), -- Jane in CHEM101
+(5, 4); -- Alice (id=4) in BIO202
+
 
