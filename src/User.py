@@ -17,7 +17,7 @@ class User:
         self.majorId = None
     
     def load(self, userInfo):
-        if len(userInfo) != 6:
-            raise IndexError(f'{len(userInfo)}: potential over/under flow')
-        
-        self.id, self.fname, self.lname, self.role, self.roleId, self.majorId = userInfo
+        if userInfo and len(userInfo) == 6:
+            self.id, self.fname, self.lname, self.role, self.roleId, self.majorId = userInfo
+        else:
+            raise IndexError('Not enough data to load user')

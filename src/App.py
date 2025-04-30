@@ -7,38 +7,34 @@ class App:
     def __init__(self):
         self.db = DataBase()
         self.user = User()
+        self.login_attempts = MAX_LOGIN_ATTEMPTS
         
     def run(self):
         while True:
             self.show_login_menu()
-
+            
             if self.login_attempts == 0:
                 print('Login attempts exceeded. Closing program.')
                 exit(1)
 
             if self.user.roleId == 'stu':
                 self.show_student_menu()
-            else:
+            elif self.user.roleId == 'mgr':
                 self.show_manager_menu()
             
     def show_login_menu(self):
         print(f"===:. NCAT Application Login .:=== \n")
-        login_attempts = MAX_LOGIN_ATTEMPTS
         
-        while login_attempts > 0:
-            username = input("Enter User Name: ")
-            password = input("Enter User Password: ")
+        username = input("Enter User Name: ")
+        password = input("Enter User Password: ")
 
-
-            try:
-                self.login(username, password)
-                print(f"I am a {self.user.role}")
-                break
-            except:
-                print("Login failed.\n")
-                login_attempts -= 1
-                print(f'Login attempts remaining {login_attempts}\n')
-                continue
+        try:
+            self.login(username, password)
+            print(f"I am a {self.user.role}")
+        except:
+            print("Login failed.\n")
+            self.login_attempts -= 1
+            print(f'Login attempts remaining {self.login_attempts}\n')
 
     def login(self, username, password):
         # verifies user in database and returns information relevant for future operations
