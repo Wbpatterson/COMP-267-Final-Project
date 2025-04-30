@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS NCAT;
 CREATE DATABASE IF NOT EXISTS NCAT;
 USE NCAT;
 
+
 create user if not exists'AggieAdmin'@'localhost' identified by 'AggiePride';
 grant all privileges on ncat.* to 'AggieAdmin'@'localhost' with grant option;
 flush privileges;
@@ -47,9 +48,9 @@ CREATE TABLE rosterclass(
     FOREIGN KEY (userid) REFERENCES users (id)
 );
 
---Below are the sample queries used for the presentation
---If you want to go back to the previous layout, delete all the queries below this comment.
--- Majors
+-- --Below are the sample queries used for the presentation
+-- --If you want to go back to the previous layout, delete all the queries below this comment.
+-- -- Majors
 INSERT INTO major (major) VALUES
 ('Computer Science'),
 ('Mathematics'),
@@ -76,10 +77,10 @@ INSERT INTO roster (class, code) VALUES
 
 -- Enrollments
 INSERT INTO rosterclass (rosterid, userid) VALUES
-(1, 2), -- John (id=2) in CS101
-(2, 2), -- John in MATH201
-(3, 3), -- Jane (id=3) in PHYS301
-(4, 3), -- Jane in CHEM101
-(5, 4); -- Alice (id=4) in BIO202
+(1, 3), -- John (id=3) in CS101
+(2, 3), -- John (id=3) in MATH201
+(3, 4), -- Jane (id=4) in PHYS301
+(4, 4), -- Jane (id=4) in CHEM101
+(5, 5); -- Alice (id=5) in BIO202
 
 

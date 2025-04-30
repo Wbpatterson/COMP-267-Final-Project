@@ -1,17 +1,13 @@
-from Database import DataBase
-from User import User
-from Constants import *
+from .database import DataBase
+from .user import User
 
-
-from Constants import MAX_LOGIN_ATTEMPTS
-
+MAX_LOGIN_ATTEMPTS = 3
 
 class App:
     def __init__(self):
         self.db = DataBase()
         self.user = User()
-        self.login_attempts = MAX_LOGIN_ATTEMPTS
-
+        
     def run(self):
         while True:
             self.show_login_menu()
@@ -24,14 +20,14 @@ class App:
                 self.show_student_menu()
             else:
                 self.show_manager_menu()
-
+            
     def show_login_menu(self):
         print(f"===:. NCAT Application Login .:=== \n")
-
-        while self.login_attempts > 0:
+        login_attempts = MAX_LOGIN_ATTEMPTS
+        
+        while login_attempts > 0:
             username = input("Enter User Name: ")
             password = input("Enter User Password: ")
-            print(f'Login attempts remaining {self.login_attempts}\n')
 
 
             try:
@@ -40,7 +36,8 @@ class App:
                 break
             except:
                 print("Login failed.\n")
-                self.login_attempts -= 1
+                login_attempts -= 1
+                print(f'Login attempts remaining {login_attempts}\n')
                 continue
 
     def login(self, username, password):
@@ -53,7 +50,6 @@ class App:
                """
 
         userInfo = self.db.query(sql)
-        #print(userInfo)
         self.user.load(userInfo)
 
         # HAS NOT BEEN TESTED YET
@@ -261,7 +257,7 @@ class App:
 
         class_code = input("\nEnter the Class Code (e.g., CS101): ").strip().upper()
 
-        # Get the roster ID using class code
+        # Get the roster ID using class   
         self.db.cursor.execute("SELECT id FROM roster WHERE code = %s", (class_code,))
         result = self.db.cursor.fetchone()
 
@@ -433,4 +429,3 @@ class App:
         self.db.cursor.execute(insert_query, (username, password, fname, lname, major_id))
         self.db.connection.commit()
         print("Student successfully added.")
-
