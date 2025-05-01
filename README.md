@@ -17,3 +17,6 @@ how a database integrates with an application, while also implementing basic aut
 4. Create the database and tables by running the create-ncat.sql file located in the project root using either MySQL Workbench or the MySQL command-line interface that comes with the MySQL installation.
 
 5. Navigate to the directory where you cloned the repository, and run main.py to start the application.
+
+# Completeness
+Our project has all functionality up to but not including the bonus specifications outlined in the project requirements document (Spring_Project.pdf)
