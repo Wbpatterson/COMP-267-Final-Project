@@ -48,8 +48,6 @@ class App:
         userInfo = self.db.query(sql)
         self.user.load(userInfo)
 
-        # HAS NOT BEEN TESTED YET
-
     def show_student_menu(self):
         while True:
             print("\n====:. Student Menu .:====")
@@ -66,6 +64,8 @@ class App:
                 self.drop_class()
             elif choice == '3':
                 print("Logging out...\n")
+                self.user.clear()
+                self.login_attempts = MAX_LOGIN_ATTEMPTS
                 return  # Go back to run() -> show_login_menu()
             else:
                 print("Invalid option. Please try again.")
@@ -183,6 +183,8 @@ class App:
                 self.add_new_student()
             elif choice == '6':
                 print("Logging out...\n")
+                self.user.clear()
+                self.login_attempts = MAX_LOGIN_ATTEMPTS
                 break
 
             else:
@@ -285,29 +287,19 @@ class App:
         fname = input("First Name: ").strip()
         lname = input("Last Name: ").strip()
         username = input("Username: ").strip()
-        password = input("Password: ").strip()
 
-        # Show majors in a table-like format
-        self.db.cursor.execute("SELECT id, major FROM major")
-        majors = self.db.cursor.fetchall()
-        print("\nAvailable Majors:")
-        print(f"{'Major ID':<10} | {'Major Name'}")
-        print("-" * 30)
-        for mid, mname in majors:
-            print(f"{mid:<10} | {mname}")
-
-        major_id = input("\nEnter the Major ID: ").strip()
-        if not all([fname, lname, username, password, major_id]):
+        if not all([fname, lname, username]):
             print("All fields are required.")
-            return
-        if not major_id.isdigit():
-            print("Major ID must be numeric.")
             return
 
         self.db.cursor.execute("SELECT id FROM users WHERE username = %s", (username,))
-        if self.db.cursor.fetchone():
-            print("Username already exists. Choose another.")
+        student_id = self.db.cursor.fetchone()
+        
+        if not student_id:
+            print("Student not found. Choose another.")
             return
+        else:
+            student_id = student_id[0]
 
         # Show classes in a table-like format
         self.db.cursor.execute("SELECT code, class FROM roster")
@@ -326,15 +318,6 @@ class App:
             print("Class code not found.")
             return
         class_id = result[0]
-
-        insert_user = """
-            INSERT INTO users (roleID, userName, userPassword, fname, lname, majorID)
-            VALUES ('stu', %s, %s, %s, %s, %s)
-        """
-        self.db.cursor.execute(insert_user, (username, password, fname, lname, major_id))
-        self.db.connection.commit()
-
-        student_id = self.db.cursor.lastrowid
 
         self.db.cursor.execute("INSERT INTO rosterclass (rosterid, userid) VALUES (%s, %s)", (class_id, student_id))
         self.db.connection.commit()
@@ -388,7 +371,6 @@ class App:
         self.db.connection.commit()
         print("Student successfully removed from the class.")
 
-    # THIS ONE STILL NEEDS WORK
     def add_new_student(self):
         fname = input("First Name: ").strip()
         lname = input("Last Name: ").strip()
