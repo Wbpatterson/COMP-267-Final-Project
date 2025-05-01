@@ -1,7 +1,0 @@
-USE ncat;
-
-CREATE TABLE roster(
- id   	INT PRIMARY KEY AUTO_INCREMENT,
- class 	VARCHAR(50),
- code 	VARCHAR(20)
-);

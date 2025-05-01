@@ -1,7 +1,0 @@
-USE ncat;
-
-CREATE TABLE major(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    major VARCHAR(50)
-);
-
