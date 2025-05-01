@@ -32,8 +32,8 @@ CREATE TABLE users(
     FOREIGN KEY (majorID) REFERENCES major(id)
 );
 
-INSERT INTO Users (roleID, UserName, UserPassword) VALUES ('mgr', 'Manager1', 'AggiePride1');
-INSERT INTO Users (roleID, UserName, UserPassword) VALUES ('stu', 'Student1', 'AggiePride1');
+INSERT INTO Users (roleID, UserName, UserPassword, fname, lname) VALUES ('mgr', 'Manager1', 'AggiePride1', 'James', 'Smith');
+INSERT INTO Users (roleID, UserName, UserPassword, fname, lname) VALUES ('stu', 'Student1', 'AggiePride1', 'Robert', 'Jones');
 
 CREATE TABLE roster(
     id   	INT PRIMARY KEY AUTO_INCREMENT,
