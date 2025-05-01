@@ -294,13 +294,12 @@ class App:
 
         self.db.cursor.execute("SELECT id FROM users WHERE username = %s", (username,))
         student_id = self.db.cursor.fetchone()
-        
         if not student_id:
             print("Student not found. Choose another.")
             return
         else:
             student_id = student_id[0]
-
+            
         # Show classes in a table-like format
         self.db.cursor.execute("SELECT code, class FROM roster")
         classes = self.db.cursor.fetchall()
@@ -318,6 +317,11 @@ class App:
             print("Class code not found.")
             return
         class_id = result[0]
+        
+        self.db.cursor.execute("SELECT rosterid, userid FROM rosterclass WHERE rosterid = %s AND userid = %s", (class_id, student_id))
+        if self.db.cursor.fetchone():
+            print('Student already enrolled.')
+            return
 
         self.db.cursor.execute("INSERT INTO rosterclass (rosterid, userid) VALUES (%s, %s)", (class_id, student_id))
         self.db.connection.commit()
